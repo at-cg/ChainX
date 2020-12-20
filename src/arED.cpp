@@ -13,9 +13,9 @@
 KSEQ_INIT(gzFile, gzread)
 #define VERBOSE 0
 
-	/**
-	 * @brief   reads single sequence from input fasta / fastq file
-	 */
+/**
+ * @brief   reads single sequence from input fasta / fastq file
+ **/
 void readSeq(const char* filename, std::string &str)
 {
 	gzFile fp = gzopen(filename, "r");
@@ -33,6 +33,9 @@ void readSeq(const char* filename, std::string &str)
 	gzclose(fp); 
 }
 
+/**
+ * @brief   compute anchor-restricted edit distance using strong precedence criteria
+ **/
 int redit_strong_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 {
 	int n = anchors.size();
@@ -78,6 +81,9 @@ int redit_strong_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 	return costs[n-1];
 }
 
+/**
+ * @brief   compute anchor-restricted edit distance using weak precedence criteria (begin points only)
+ **/
 int redit_weak_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 {
 	int n = anchors.size();
@@ -123,6 +129,9 @@ int redit_weak_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 	return costs[n-1];
 }
 
+/**
+ * @brief   compute anchor-restricted edit distance using weak precedence criteria (end points only)
+ **/
 int redit_weak_rev_prec(const std::vector<std::tuple<int, int, int>> &anchors_)
 {
 	std::vector<std::tuple<int, int, int>> anchors = anchors_; //local copy
@@ -178,6 +187,9 @@ int redit_weak_rev_prec(const std::vector<std::tuple<int, int, int>> &anchors_)
 	return costs[n-1];
 }
 
+/**
+ * @brief   compute anchor-restricted edit distance using standard edit-distance like dynamic programming 
+ **/
 int redit_dp(const std::vector<std::tuple<int, int, int>> &anchors)
 {
 	int n = anchors.size();
