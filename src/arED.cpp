@@ -25,7 +25,7 @@ void readSeq(const char* filename, std::string &str)
 	if ((len = kseq_read(seq)) >= 0) 
 	{
 	  str = seq->seq.s;
-  }
+	}
 
 	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 
@@ -73,7 +73,7 @@ int redit_strong_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 	  }
 	  //save optimal cost at offset j
 	  costs[j] = find_min_cost;
-  }
+	}
 
 	if (VERBOSE)
 		std::cerr << "Cost array = " << costs << "\n";
@@ -279,7 +279,7 @@ int redit_weak_prec(const std::vector<std::tuple<int, int, int>> &anchors)
 	  }
 	  //save optimal cost at offset j
 	  costs[j] = find_min_cost;
-  }
+	}
 
 	if (VERBOSE)
 		std::cerr << "Cost array = " << costs << "\n";
@@ -337,7 +337,7 @@ int redit_weak_rev_prec(const std::vector<std::tuple<int, int, int>> &anchors_)
 	  }
 	  //save optimal cost at offset j
 	  costs[j] = find_min_cost;
-  }
+	}
 
 	if (VERBOSE)
 		std::cerr << "Cost array = " << costs << "\n";
@@ -370,8 +370,8 @@ int redit_dp(const std::vector<std::tuple<int, int, int>> &anchors)
 	  for(int j=0; j<e_len; j++)
 	  {
 		matchAllowed[e_a+1  + j][e_c+1  + j] = true;
+	  }
 	}
-  }
 
 
 	//initialize dp_matrix (len_ref+1 x len_qry+1) 
@@ -388,7 +388,7 @@ int redit_dp(const std::vector<std::tuple<int, int, int>> &anchors)
 			dp_matrix[i][j] = std::min({dp_matrix[i - 1][j - 1], dp_matrix[i - 1][j] + 1, dp_matrix[i][j - 1] + 1});
 		else
 			dp_matrix[i][j] = std::min({dp_matrix[i - 1][j - 1] + 1, dp_matrix[i - 1][j] + 1, dp_matrix[i][j - 1] + 1});
-	}
+	  }
 	}
 
 	return dp_matrix[len_ref][len_qry];
@@ -468,7 +468,7 @@ int main(int argc, char **argv)
 		  std::cout << result.editDistance << "\n";
 	  }
 	  edlibFreeAlignResult(result);
-  }
+	}
 	else if (method > 0)
 	{
 	  std::vector<std::tuple<int, int, int>> fwd_matches;
@@ -511,7 +511,7 @@ int main(int argc, char **argv)
 		  std::cout << redit_strong_prec_infix_optimized(fwd_matches) << "\n";
 	  else if (method == 7)
 		  std::cout << redit_dp_infix(fwd_matches) << "\n";
-  }
+	}
 
 	return 0;
 }
