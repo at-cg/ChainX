@@ -55,10 +55,17 @@ int main(int argc, char **argv)
     tStart = std::chrono::system_clock::now();
     std::vector<std::tuple<int, int, int>> fwd_matches;
     auto append_matches = [&](const mummer::mummer::match_t& m) { fwd_matches.emplace_back(m.ref, m.query, m.len); }; //0-based coordinates
-    sa.findMEM_each(queries[i].data(), queries[i].length(), parameters.minLen, false, append_matches);
+    if (parameters.matchType == "MEM")
+      sa.findMEM_each(queries[i].data(), queries[i].length(), parameters.minLen, false, append_matches);
+    else if (parameters.matchType == "MUM")
+      sa.findMUM_each(queries[i].data(), queries[i].length(), parameters.minLen, false, append_matches);
+    else
+      std::cerr << "ERROR, redit::main, incorrect anchor type specified" << "\n";
+
 
     wctduration = (std::chrono::system_clock::now() - tStart);
-    std::cerr << "INFO, redit::main, MEMs identified (" << wctduration.count() << " seconds elapsed)\n";
+    if (parameters.matchType == "MEM") std::cerr << "INFO, redit::main, MEMs identified (" << wctduration.count() << " seconds elapsed)\n";
+    if (parameters.matchType == "MUM") std::cerr << "INFO, redit::main, MUMs identified (" << wctduration.count() << " seconds elapsed)\n";
 
     //place dummy MEMs and then sort
     fwd_matches.emplace_back(-1,-1,1);
@@ -81,13 +88,19 @@ int main(int argc, char **argv)
     //compute anchor-restricted edit distance
     std::cout << "INFO, redit::main, query #" << i << " (" << queries[i].length() << " residues), ";
     if (parameters.mode == "g")
+    {
+      if (parameters.naive)
+        std::cout << "distance = " << redit::DP_global(fwd_matches) << "\n";
+      else
       std::cout << "distance = " << redit::compute_global(fwd_matches) << "\n";
+    }
     else if (parameters.mode == "sg")
-      std::cout << "distance = " << redit::compute_semiglobal(fwd_matches) << "\n";
-    else if (parameters.mode == "dp-g")
-      std::cout << "distance = " << redit::DP_global(fwd_matches) << "\n";
-    else if (parameters.mode == "dp-sg")
-      std::cout << "distance = " << redit::DP_semiglobal(fwd_matches) << "\n";
+    {
+      if (parameters.naive)
+        std::cout << "distance = " << redit::DP_semiglobal(fwd_matches) << "\n";
+      else
+        std::cout << "distance = " << redit::compute_semiglobal(fwd_matches) << "\n";
+    }
     else 
       std::cerr << "ERROR, redit::main, incorrect mode specified" << "\n";
 
