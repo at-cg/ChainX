@@ -1,6 +1,6 @@
 CPPFLAGS= -g -std=c++11 
 SOURCES1=src/redit.cpp \
-				ext/essaMEM/sparseSA.cpp  ext/essaMEM/sssort_compact.cc
+				 ext/essaMEM/sparseSA.cpp  ext/essaMEM/sssort_compact.cc
 
 SOURCES2=src/redit_edlib.cpp \
 				 ext/essaMEM/sparseSA.cpp  ext/essaMEM/sssort_compact.cc ext/edlib/edlib.cpp

@@ -18,11 +18,11 @@ cat Chromosome_2890043_3890042_0/Chromosome_2890043_3890042_0.fasta Chromosome_2
 
 QUERY=query.fa
 
-/usr/bin/time srun -N 1 $EDIT -q $QUERY -t $REF -l -1 -m g &> log_edit &
+/usr/bin/time srun -N 1 -n 1 $EDIT -q $QUERY -t $REF -l -1 -m g &> log_edit &
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-/usr/bin/time srun -N 1 $REDIT -q $QUERY -t $REF -l 20 -m g &> log_redit20 &
+/usr/bin/time srun -N 1 -n 1 $REDIT -q $QUERY -t $REF -l 20 -m g &> log_redit20 &
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-/usr/bin/time srun -N 1 $REDIT -q $QUERY -t $REF -l 10 -m g &> log_redit10 &
+/usr/bin/time srun -N 1 -n 1 $REDIT -q $QUERY -t $REF -l 10 -m g &> log_redit10 &
 
 wait
 date

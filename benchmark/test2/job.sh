@@ -18,11 +18,11 @@ cat E_coli_DH1/mason_illumina_reads/10kbp/e_coli_DH1_illumina_1x10000.fasta E_co
 
 QUERY=query.fa
 
-/usr/bin/time srun -N 1 $EDIT -q $QUERY -t $REF -l -1 -m sg &> log_edit &
+/usr/bin/time srun -N 1 -n 1 $EDIT -q $QUERY -t $REF -l -1 -m sg &> log_edit &
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-/usr/bin/time srun -N 1 $REDIT -q $QUERY -t $REF -l 20 -m sg &> log_redit20 & 
+/usr/bin/time srun -N 1 -n 1 $REDIT -q $QUERY -t $REF -l 20 -m sg &> log_redit20 & 
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-/usr/bin/time srun -N 1 $REDIT -q $QUERY -t $REF -l 10 -m sg &> log_redit10 &
+/usr/bin/time srun -N 1 -n 1 $REDIT -q $QUERY -t $REF -l 10 -m sg &> log_redit10 &
 
 wait
 date
