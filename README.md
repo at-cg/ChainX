@@ -8,7 +8,7 @@ SYNOPSIS
 OPTIONS
         <path>      query sequences in fasta or fastq format
         <path>      target sequence in fasta format
-        <length>    minimum match length (default 20)
+        <length>    minimum match length (e.g., 20)
         g|sg        distance function (e.g., global or semi-global)
         MEM|MUM     filter maximal exact matches, 'MEM' consider all, 'MUM' must be single-copy
         --naive     use slow 2d dynamic programming algorithm for correctness check

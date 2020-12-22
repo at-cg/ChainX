@@ -30,7 +30,7 @@ namespace redit
       (
        clipp::required("-q") & clipp::value("path", param.qfile).doc("query sequences in fasta or fastq format"),
        clipp::required("-t") & clipp::value("path", param.tfile).doc("target sequence in fasta format"),
-       clipp::required("-l") & clipp::value("length", param.minLen).doc("minimum match length (default 20)"),
+       clipp::required("-l") & clipp::value("length", param.minLen).doc("minimum match length (e.g., 20)"),
        clipp::required("-m") & (clipp::required("g").set(param.mode) | clipp::required("sg").set(param.mode)).doc("distance function (e.g., global or semi-global)"),
        clipp::required("-a") & (clipp::required("MEM").set(param.matchType) | clipp::required("MUM").set(param.matchType)).doc("filter maximal exact matches, 'MEM' consider all, 'MUM' must be single-copy"),
        clipp::option("--naive").set(param.naive).doc("use slow 2d dynamic programming algorithm for correctness check"),
