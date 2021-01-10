@@ -10,7 +10,7 @@ namespace redit
   /**
    * @brief   reads sequences from input fasta / fastq file
    **/
-  void readSequences(const std::string &path, std::vector<std::string> &seqs)
+  void readSequences(const std::string &path, std::vector<std::string> &seqs, std::vector<std::string> &ids)
   {
     gzFile fp = gzopen(path.data(), "r");
 
@@ -27,11 +27,13 @@ namespace redit
     while ((len = kseq_read(seq)) >= 0) 
     {
       std::string str (seq->seq.s);
+      std::string name (seq->name.s);
 
       //convert to upper case
       std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 
       seqs.push_back(str);
+      ids.push_back(name);
     }
 
     assert (seqs.size() > 0);
