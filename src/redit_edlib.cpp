@@ -23,7 +23,7 @@
 int main(int argc, char **argv) 
 {
   redit::Parameters parameters;
-  redit::parseandSave(argc, argv, parameters);
+  redit::parseandSave_edlib(argc, argv, parameters);
 
   std::vector<std::string> queries; //one or multiple sequences
   std::vector<std::string> query_ids;

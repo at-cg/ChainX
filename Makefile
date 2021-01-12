@@ -1,4 +1,4 @@
-CPPFLAGS= -g -std=c++11 
+CPPFLAGS= -DNDEBUG -std=c++11 -O3
 SOURCES1=src/redit.cpp \
 				 ext/essaMEM/sparseSA.cpp  ext/essaMEM/sssort_compact.cc
 

@@ -22,7 +22,7 @@
 int main(int argc, char **argv) 
 {
   redit::Parameters parameters;
-  redit::parseandSave(argc, argv, parameters);
+  redit::parseandSave_redit(argc, argv, parameters);
 
   std::vector<std::string> queries; //one or multiple sequences
   std::vector<std::string> query_ids;
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   if (!parameters.all2all)
   {
     //Compute anchors
-    mummer::mummer::sparseSA sa = mummer::mummer::sparseSA::create_auto(target[0].data(), target[0].length(), parameters.minLen, true);
+    mummer::mummer::sparseSA sa (mummer::mummer::sparseSA::create_auto(target[0].data(), target[0].length(), parameters.minLen, true));
 
     std::chrono::duration<double> wctduration = (std::chrono::system_clock::now() - tStart);
     std::cerr << "INFO, redit::main, suffix array computed in " << wctduration.count() << " seconds\n";

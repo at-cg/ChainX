@@ -19,7 +19,7 @@ namespace redit
     bool all2all = false;     //compute all to all global distance among query sequences
   };
 
-  void parseandSave(int argc, char** argv, Parameters &param)
+  void parseandSave_redit(int argc, char** argv, Parameters &param)
   {
     //define all arguments
     auto cli =
@@ -49,6 +49,58 @@ namespace redit
     std::cerr << "INFO, redit::parseandSave, anchor : minimim length = " << param.minLen << ", type = " << param.matchType << std::endl;
     //if (param.load) std::cerr << "INFO, redit::parseandSave, index will be loaded using prefix = " << param.indexpathl << std::endl;
     //if (param.save) std::cerr << "INFO, redit::parseandSave, index will be saved using prefix = " << param.indexpaths << std::endl;
+
+    if (! exists(param.tfile))
+    {
+      std::cerr << "ERROR, redit::parseandSave, target sequence file could not be opened" << std::endl;
+      exit(1);
+    }
+
+    if (! exists(param.qfile))
+    {
+      std::cerr << "ERROR, redit::parseandSave, query sequence file could not be opened" << std::endl;
+      exit(1);
+    }
+
+    if (param.all2all)
+    {
+      if (param.qfile != param.tfile)
+      {
+        std::cerr << "ERROR, redit::parseandSave, query and target sequence file paths must be same in all-to-all mode" << std::endl;
+        exit(1);
+      }
+
+      if (param.mode != "g")
+      {
+        std::cerr << "ERROR, redit::parseandSave, only global distance function [ -m g ] can be used in all-to-all mode" << std::endl;
+        exit(1);
+      }
+    }
+  }
+
+  void parseandSave_edlib(int argc, char** argv, Parameters &param)
+  {
+    //define all arguments
+    auto cli =
+      (
+       clipp::required("-q") & clipp::value("path", param.qfile).doc("query sequences in fasta or fastq format"),
+       clipp::required("-t") & clipp::value("path", param.tfile).doc("target sequence in fasta format"),
+       clipp::required("-m") & (clipp::required("g").set(param.mode) | clipp::required("sg").set(param.mode)).doc("distance function (e.g., global or semi-global)"),
+       clipp::option("--all2all").set(param.all2all).doc("output all to all global distances among query sequences in phylip format")
+      );
+
+    if(!clipp::parse(argc, argv, cli))
+    {
+      //print help page
+      clipp::operator<<(std::cout, clipp::make_man_page(cli, argv[0])) << std::endl;
+      exit(1);
+    }
+
+    //print all input parameters
+    std::cerr << "INFO, redit::parseandSave, target sequence file = " << param.tfile << std::endl;
+    std::cerr << "INFO, redit::parseandSave, query sequences file = " << param.qfile << std::endl;
+    std::cerr << "INFO, redit::parseandSave, mode = " << param.mode << std::endl;
+    if (param.all2all) std::cerr << "INFO, redit::parseandSave, computing all-to-all distances" << std::endl;
 
     if (! exists(param.tfile))
     {
