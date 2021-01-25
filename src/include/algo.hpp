@@ -1,5 +1,5 @@
-#ifndef REDIT_ALGO_H
-#define REDIT_ALGO_H
+#ifndef CHAINX_ALGO_H
+#define CHAINX_ALGO_H
 
 #include <iostream>
 #include <cassert>
@@ -13,11 +13,11 @@
 #undef VERBOSE
 #define VERBOSE 0
 
-namespace redit
+namespace chainx
 {
   /**
    * @brief   compute anchor-restricted edit distance using strong precedence criteria
-   * 			optimized to run faster using engineering trick(s)
+   * 			    optimized to run faster using engineering trick(s), comparison mode: global
    **/
   int compute_global(const std::vector<std::tuple<int, int, int>> &anchors)
   {
@@ -90,7 +90,7 @@ namespace redit
 
   /**
    * @brief   compute anchor-restricted (semi-global) edit distance using strong precedence criteria
-   * 			optimized to run faster using engineering trick(s)
+   * 			    optimized to run faster using engineering trick(s)
    **/
   int compute_semiglobal(const std::vector<std::tuple<int, int, int>> &anchors)
   {

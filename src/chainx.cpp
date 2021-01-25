@@ -21,25 +21,25 @@
 
 int main(int argc, char **argv) 
 {
-  redit::Parameters parameters;
-  redit::parseandSave_redit(argc, argv, parameters);
+  chainx::Parameters parameters;
+  chainx::parseandSave_chainx(argc, argv, parameters);
 
   std::vector<std::string> queries; //one or multiple sequences
   std::vector<std::string> query_ids;
   std::vector<std::string> target; //single sequence
   std::vector<std::string> target_ids;
 
-  redit::readSequences(parameters.qfile, queries, query_ids);
-  redit::readSequences(parameters.tfile, target, target_ids);
+  chainx::readSequences(parameters.qfile, queries, query_ids);
+  chainx::readSequences(parameters.tfile, target, target_ids);
 
   int queryLenSum = 0;
   for (auto &q: queries) queryLenSum += q.length();
-  std::cerr << "INFO, redit::main, read " << queries.size() << " queries, " << queryLenSum << " residues\n";
-  if (!parameters.all2all) std::cerr << "INFO, redit::main, read target, " << target[0].length() << " residues\n";
+  std::cerr << "INFO, chainx::main, read " << queries.size() << " queries, " << queryLenSum << " residues\n";
+  if (!parameters.all2all) std::cerr << "INFO, chainx::main, read target, " << target[0].length() << " residues\n";
 
   //Start timer
   auto tStart = std::chrono::system_clock::now();
-  std::cerr << "\nINFO, redit::main, timer set\n";
+  std::cerr << "\nINFO, chainx::main, timer set\n";
 
   std::vector<std::tuple<int, int, int>> fwd_matches;
   //lambda function
@@ -51,11 +51,11 @@ int main(int argc, char **argv)
     mummer::mummer::sparseSA sa (mummer::mummer::sparseSA::create_auto(target[0].data(), target[0].length(), parameters.minLen, true));
 
     std::chrono::duration<double> wctduration = (std::chrono::system_clock::now() - tStart);
-    std::cerr << "INFO, redit::main, suffix array computed in " << wctduration.count() << " seconds\n";
+    std::cerr << "INFO, chainx::main, suffix array computed in " << wctduration.count() << " seconds\n";
 
     for (int i = 0; i < queries.size(); i++)
     {
-      std::cerr << "\nINFO, redit::main, timer reset\n";
+      std::cerr << "\nINFO, chainx::main, timer reset\n";
       tStart = std::chrono::system_clock::now();
       fwd_matches.clear();
       if (parameters.matchType == "MEM")
@@ -63,12 +63,12 @@ int main(int argc, char **argv)
       else if (parameters.matchType == "MUM")
         sa.findMUM_each(queries[i].data(), queries[i].length(), parameters.minLen, false, append_matches);
       else
-        std::cerr << "ERROR, redit::main, incorrect anchor type specified" << "\n";
+        std::cerr << "ERROR, chainx::main, incorrect anchor type specified" << "\n";
 
 
       wctduration = (std::chrono::system_clock::now() - tStart);
-      if (VERBOSE && parameters.matchType == "MEM") std::cerr << "INFO, redit::main, MEMs identified (" << wctduration.count() << " seconds elapsed)\n";
-      if (VERBOSE && parameters.matchType == "MUM") std::cerr << "INFO, redit::main, MUMs identified (" << wctduration.count() << " seconds elapsed)\n";
+      if (VERBOSE && parameters.matchType == "MEM") std::cerr << "INFO, chainx::main, MEMs identified (" << wctduration.count() << " seconds elapsed)\n";
+      if (VERBOSE && parameters.matchType == "MUM") std::cerr << "INFO, chainx::main, MUMs identified (" << wctduration.count() << " seconds elapsed)\n";
 
       //place dummy MEMs and then sort
       fwd_matches.emplace_back(-1,-1,1);
@@ -82,33 +82,33 @@ int main(int argc, char **argv)
 
       std::size_t sum_anchor_len = 0;
       for (auto &e: fwd_matches) sum_anchor_len += std::get<2>(e);
-      std::cerr << "INFO, redit::main, count of anchors (including dummy) = " << fwd_matches.size() << ", average length = " << sum_anchor_len * 1.0 / fwd_matches.size() << "\n";
+      std::cerr << "INFO, chainx::main, count of anchors (including dummy) = " << fwd_matches.size() << ", average length = " << sum_anchor_len * 1.0 / fwd_matches.size() << "\n";
 
       if (VERBOSE)
         std::cerr << "List of sorted anchors = " << fwd_matches << "\n";
 
       //compute anchor-restricted edit distance
-      std::cerr << "INFO, redit::main, query #" << i << " (" << queries[i].length() << " residues), ";
+      std::cerr << "INFO, chainx::main, query #" << i << " (" << queries[i].length() << " residues), ";
       if (parameters.mode == "g")
       {
         if (parameters.naive)
-          std::cout << "distance = " << redit::DP_global(fwd_matches) << "\n";
+          std::cout << "distance = " << chainx::DP_global(fwd_matches) << "\n";
         else
-          std::cout << "distance = " << redit::compute_global(fwd_matches) << "\n";
+          std::cout << "distance = " << chainx::compute_global(fwd_matches) << "\n";
       }
       else if (parameters.mode == "sg")
       {
         if (parameters.naive)
-          std::cout << "distance = " << redit::DP_semiglobal(fwd_matches) << "\n";
+          std::cout << "distance = " << chainx::DP_semiglobal(fwd_matches) << "\n";
         else
-          std::cout << "distance = " << redit::compute_semiglobal(fwd_matches) << "\n";
+          std::cout << "distance = " << chainx::compute_semiglobal(fwd_matches) << "\n";
       }
       else
-        std::cerr << "ERROR, redit::main, incorrect mode specified" << "\n";
+        std::cerr << "ERROR, chainx::main, incorrect mode specified" << "\n";
 
 
       wctduration = (std::chrono::system_clock::now() - tStart);
-      std::cerr << "INFO, redit::main, distance computation finished (" << wctduration.count() << " seconds elapsed)\n";
+      std::cerr << "INFO, chainx::main, distance computation finished (" << wctduration.count() << " seconds elapsed)\n";
     }
   }
   else
@@ -132,7 +132,7 @@ int main(int argc, char **argv)
           sa.findMUM_each(queries[j].data(), queries[j].length(), parameters.minLen, false, append_matches);
         else
         {
-          std::cerr << "ERROR, redit::main, incorrect anchor type specified" << "\n";
+          std::cerr << "ERROR, chainx::main, incorrect anchor type specified" << "\n";
           exit(1);
         }
 
@@ -147,16 +147,16 @@ int main(int argc, char **argv)
             });
 
         if (parameters.naive)
-          costs[j][i] = costs[i][j] = redit::DP_global(fwd_matches);
+          costs[j][i] = costs[i][j] = chainx::DP_global(fwd_matches);
         else
-          costs[j][i] = costs[i][j] = redit::compute_global(fwd_matches);
+          costs[j][i] = costs[i][j] = chainx::compute_global(fwd_matches);
 
       }
 
       costs[i][i] = 0;
     }
 
-    std::cerr << "\nINFO, redit::main, printing distance matrix to stdout\n";
+    std::cerr << "\nINFO, chainx::main, printing distance matrix to stdout\n";
 
     //phylip-formatted output
     {
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
     }
 
     std::chrono::duration<double> wctduration = (std::chrono::system_clock::now() - tStart);
-    std::cerr << "INFO, redit::main, all-to-all distance computation took " << wctduration.count() << " seconds\n";
+    std::cerr << "INFO, chainx::main, all-to-all distance computation took " << wctduration.count() << " seconds\n";
   }
 
   return 0;

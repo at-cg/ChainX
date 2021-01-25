@@ -4,7 +4,7 @@
 #include "kseq/kseq.h"
 KSEQ_INIT(gzFile, gzread)
 
-namespace redit
+namespace chainx
 {
 
   /**

@@ -22,36 +22,36 @@
 
 int main(int argc, char **argv) 
 {
-  redit::Parameters parameters;
-  redit::parseandSave_edlib(argc, argv, parameters);
+  chainx::Parameters parameters;
+  chainx::parseandSave_edlib(argc, argv, parameters);
 
   std::vector<std::string> queries; //one or multiple sequences
   std::vector<std::string> query_ids;
   std::vector<std::string> target; //single sequence
   std::vector<std::string> target_ids;
 
-  redit::readSequences(parameters.qfile, queries, query_ids);
-  redit::readSequences(parameters.tfile, target, target_ids);
+  chainx::readSequences(parameters.qfile, queries, query_ids);
+  chainx::readSequences(parameters.tfile, target, target_ids);
 
   int queryLenSum = 0;
   for (auto &q: queries) queryLenSum += q.length();
-  std::cerr << "INFO, redit::main, read " << queries.size() << " queries, " << queryLenSum << " residues\n";
-  if (!parameters.all2all) std::cerr << "INFO, redit::main, read target, " << target[0].length() << " residues\n";
+  std::cerr << "INFO, chainx::main, read " << queries.size() << " queries, " << queryLenSum << " residues\n";
+  if (!parameters.all2all) std::cerr << "INFO, chainx::main, read target, " << target[0].length() << " residues\n";
 
   //Start timer
   auto tStart = std::chrono::system_clock::now();
-  std::cerr << "\nINFO, redit::main, timer set\n";
+  std::cerr << "\nINFO, chainx::main, timer set\n";
 
   if (!parameters.all2all)
   {
     for (int i = 0; i < queries.size(); i++)
     {
       //Start timer
-      std::cerr << "\nINFO, redit::main, timer reset\n";
+      std::cerr << "\nINFO, chainx::main, timer reset\n";
       auto tStart = std::chrono::system_clock::now();
 
       //compute edit distance
-      std::cout << "INFO, redit::main, query #" << i << " (" << queries[i].length() << " residues), ";
+      std::cout << "INFO, chainx::main, query #" << i << " (" << queries[i].length() << " residues), ";
       if (parameters.mode == "g")
       {
         EdlibAlignResult result = edlibAlign(queries[i].data(), queries[i].length(), target[0].data(), target[0].length(), edlibDefaultAlignConfig());
@@ -69,11 +69,11 @@ int main(int argc, char **argv)
         }
       }
       else
-        std::cerr << "ERROR, redit::main, incorrect mode specified" << "\n";
+        std::cerr << "ERROR, chainx::main, incorrect mode specified" << "\n";
 
 
       std::chrono::duration<double> wctduration = (std::chrono::system_clock::now() - tStart);
-      std::cerr << "INFO, redit::main, distance computation finished (" << wctduration.count() << " seconds elapsed)\n";
+      std::cerr << "INFO, chainx::main, distance computation finished (" << wctduration.count() << " seconds elapsed)\n";
     }
   }
   else
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
       costs[i][i] = 0;
     }
 
-    std::cerr << "\nINFO, redit::main, printing distance matrix to stdout\n";
+    std::cerr << "\nINFO, chainx::main, printing distance matrix to stdout\n";
 
     //phylip-formatted output
     {
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     }
 
     std::chrono::duration<double> wctduration = (std::chrono::system_clock::now() - tStart);
-    std::cerr << "INFO, redit::main, all-to-all distance computation took " << wctduration.count() << " seconds\n";
+    std::cerr << "INFO, chainx::main, all-to-all distance computation took " << wctduration.count() << " seconds\n";
   }
 
   return 0;
