@@ -1,14 +1,14 @@
 # ChainX
 
-ChainX is a tool that computes optimal co-linear chaining cost between an input target and query sequences. It supports global and semi-global comparison modes, where the latter allows free end-gaps on a query sequence. 
+ChainX is a tool that computes optimal co-linear chaining cost between an input target and query sequences. It supports global and semi-global comparison modes, where the latter allows free end-gaps on a query sequence. It can serve as a faster alternative to computing edit distances. 
 
 ## Dependencies / External libraries
 ChainX repository uses many third-party libraries. These are separately provided in [ext](ext) folder. 
 
 - A C++ compiler with c++11 support, e.g., GNU g++ (version 5+)
-- [essaMEM] (https://doi.org/10.1093/bioinformatics/btt042)
-- [libdivsufsort] (https://github.com/y-256/libdivsufsort)
-- [MUMmer] (https://github.com/mummer4/mummer)
+- [essaMEM](https://doi.org/10.1093/bioinformatics/btt042)
+- [libdivsufsort](https://github.com/y-256/libdivsufsort)
+- [MUMmer](https://github.com/mummer4/mummer)
 - [edlib](https://github.com/Martinsos/edlib)
 - [clipp](https://github.com/muellan/clipp)
 - [cxx-prettyprint](https://github.com/louisdx/cxx-prettyprint)
