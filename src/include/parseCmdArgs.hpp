@@ -29,8 +29,8 @@ namespace chainx
        clipp::option("--all2all").set(param.all2all).doc("output all to all global distances among query sequences in phylip format"),
        clipp::option("--naive").set(param.naive).doc("use slow 2d dynamic programming algorithm for correctness check"),
        clipp::required("-m") & (clipp::required("g").set(param.mode) | clipp::required("sg").set(param.mode)).doc("distance function (e.g., global or semi-global)"),
-       clipp::required("-q") & clipp::value("path", param.qfile).doc("query sequences in fasta or fastq format"),
-       clipp::required("-t") & clipp::value("path", param.tfile).doc("target sequence in fasta format")
+       clipp::required("-q") & clipp::value("qpath", param.qfile).doc("query sequences in fasta or fastq format"),
+       clipp::required("-t") & clipp::value("tpath", param.tfile).doc("target sequence in fasta format")
       );
 
     if(!clipp::parse(argc, argv, cli))
@@ -83,8 +83,8 @@ namespace chainx
       (
        clipp::option("--all2all").set(param.all2all).doc("output all to all global distances among query sequences in phylip format"),
        clipp::required("-m") & (clipp::required("g").set(param.mode) | clipp::required("sg").set(param.mode)).doc("distance function (e.g., global or semi-global)"),
-       clipp::required("-q") & clipp::value("path", param.qfile).doc("query sequences in fasta or fastq format"),
-       clipp::required("-t") & clipp::value("path", param.tfile).doc("target sequence in fasta format")
+       clipp::required("-q") & clipp::value("qpath", param.qfile).doc("query sequences in fasta or fastq format"),
+       clipp::required("-t") & clipp::value("tpath", param.tfile).doc("target sequence in fasta format")
       );
 
     if(!clipp::parse(argc, argv, cli))
@@ -135,8 +135,8 @@ namespace chainx
       (
        clipp::option("-l") & clipp::value("length", param.minLen).doc("minimum anchor match length (default = 20)"),
        clipp::option("-a") & (clipp::required("MEM").set(param.matchType) | clipp::required("MUM").set(param.matchType)).doc("anchor type (default = MUM)"),
-       clipp::required("-q") & clipp::value("path", param.qfile).doc("query sequences in fasta or fastq format"),
-       clipp::required("-t") & clipp::value("path", param.tfile).doc("target sequence in fasta format")
+       clipp::required("-q") & clipp::value("qpath", param.qfile).doc("query sequences in fasta or fastq format"),
+       clipp::required("-t") & clipp::value("tpath", param.tfile).doc("target sequence in fasta format")
       );
 
     if(!clipp::parse(argc, argv, cli))

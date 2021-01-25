@@ -24,7 +24,7 @@ make
 ## Usage
 ```
 SYNOPSIS
-        ./chainX [-l <length>] [-a (MEM|MUM)] [--all2all] [--naive] -m (g|sg) -q <path> -t <path>
+        ./chainX [-l <length>] [-a (MEM|MUM)] [--all2all] [--naive] -m (g|sg) -q <qpath> -t <tpath>
 
 OPTIONS
         <length>    minimum anchor match length (default = 20)
@@ -32,8 +32,8 @@ OPTIONS
         --all2all   output all to all global distances among query sequences in phylip format
         --naive     use slow 2d dynamic programming algorithm for correctness check
         g|sg        distance function (e.g., global or semi-global)
-        <path>      query sequences in fasta or fastq format
-        <path>      target sequence in fasta format
+        <qpath>     query sequences in fasta or fastq format
+        <tpath>     target sequence in fasta format
 ```
 
 ## Example
