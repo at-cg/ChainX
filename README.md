@@ -1,6 +1,6 @@
 # ChainX
 
-ChainX is a tool that computes optimal co-linear chaining cost between an input target and query sequences. It supports global and semi-global comparison modes, where the latter allows free end-gaps on a query sequence. It can serve as a faster alternative to computing edit distances. 
+ChainX is a tool that computes co-linear chaining cost between an input target and query sequences. It supports global and semi-global comparison modes. A unique aspect of ChainX is that it supports anchor overlaps and gap costs, and produces optimal chaining cost. For a pair of sequences, (i) computing chaining chaining cost can be orders of magnitude faster than computing edit distance, and (ii) chaining costs and edit distances correlate well with each other. As a result, ChainX can serve as a faster alternative to computing edit distance. More details about theoretical and practical efficacy of ChainX are available in our [preprint](https://doi.org/10.1101/2021.02.03.429492).
 
 ## Dependencies / External libraries
 ChainX repository uses many third-party libraries. These are separately provided in [ext](ext) folder. 
@@ -54,3 +54,7 @@ INFO, chainx::main, count of anchors (including dummy) = 2964, average length = 
 INFO, chainx::main, query #0 (999760 residues), distance = 939635
 INFO, chainx::main, distance computation finished (0.197675 seconds elapsed)
 ```
+
+## Publications
+
+- **Chirag Jain, Daniel Gibney and Sharma Thankachan**. "[Co-linear chaining with overlaps and gap costs](https://doi.org/10.1101/2021.02.03.429492)". *bioRxiv 2021*.
