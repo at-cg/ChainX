@@ -1,6 +1,6 @@
 # ChainX
 
-ChainX is a tool that computes co-linear chaining cost between an input target and query sequences. It supports global and semi-global comparison modes. A unique aspect of ChainX is that it supports anchor overlaps and gap costs, and produces optimal chaining cost. For a pair of sequences, (i) computing chaining chaining cost can be orders of magnitude faster than computing edit distance, and (ii) chaining costs and edit distances correlate well with each other. As a result, ChainX can serve as a faster alternative to computing edit distance. More details about theoretical and practical efficacy of ChainX are available in our [preprint](https://doi.org/10.1101/2021.02.03.429492).
+ChainX is a tool that computes co-linear chaining costs between an input target and query sequences. It supports global and semi-global comparison modes. A unique aspect of ChainX is that it supports anchor overlaps and gap costs, and produces optimal chaining cost. For a pair of sequences, (i) computing chaining chaining cost can be orders of magnitude faster than computing edit distance, and (ii) chaining costs and edit distances correlate well with each other. As a result, ChainX can serve as a faster alternative to computing edit distance. More details about theoretical and practical efficacy of ChainX are available in our [preprint](https://doi.org/10.1101/2021.02.03.429492).
 
 ## Dependencies / External libraries
 ChainX repository uses many third-party libraries. These are separately provided in [ext](ext) folder. 
