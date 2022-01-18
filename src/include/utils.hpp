@@ -2,6 +2,7 @@
 #define COMMON_UTILS_HPP
 
 #include "kseq/kseq.h"
+#include <fstream>
 KSEQ_INIT(gzFile, gzread)
 
 namespace chainx
