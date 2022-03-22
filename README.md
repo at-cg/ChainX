@@ -57,4 +57,4 @@ INFO, chainx::main, distance computation finished (0.197675 seconds elapsed)
 
 ## Publications
 
-- **Chirag Jain, Daniel Gibney and Sharma Thankachan**. "[Co-linear chaining with overlaps and gap costs](https://doi.org/10.1101/2021.02.03.429492)". *bioRxiv 2021*.
+- **Chirag Jain, Daniel Gibney and Sharma Thankachan**. "[Co-linear chaining with overlaps and gap costs](https://doi.org/10.1101/2021.02.03.429492)". *RECOMB 2022*.
