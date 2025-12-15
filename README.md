@@ -1,6 +1,8 @@
 # ChainX
 
-ChainX is a tool that computes co-linear chaining costs between an input target and query sequences. It supports global and semi-global comparison modes. A unique aspect of ChainX is that it supports anchor overlaps and gap costs, and produces optimal chaining cost. For a pair of sequences, (i) computing chaining chaining cost can be orders of magnitude faster than computing edit distance, and (ii) chaining costs and edit distances correlate well with each other. As a result, ChainX can serve as a faster alternative to computing edit distance. More details about theoretical and practical efficacy of ChainX are available in our [preprint](https://doi.org/10.1101/2021.02.03.429492).
+ChainX is a tool that computes co-linear chaining costs between an input target and query sequences. It supports global and semi-global comparison modes. A unique aspect of ChainX is that it supports anchor overlaps and gap costs. The output chains are close to optimal in practice. 
+
+For a pair of sequences, computing chaining cost can be orders of magnitude faster than computing edit distance. Moreover, chaining cost and edit distance correlate well with each other. As a result, ChainX can serve as a faster alternative to estimating edit distance. More details about the algorithm are available in our [paper](#pub).
 
 ## Dependencies / External libraries
 ChainX repository uses many third-party libraries. These are separately provided in [ext](ext) folder. 
@@ -30,7 +32,7 @@ OPTIONS
         <length>    minimum anchor match length (default = 20)
         MEM|MUM     anchor type (default = MUM)
         --all2all   output all to all global distances among query sequences in phylip format
-        --naive     use slow 2d dynamic programming algorithm for correctness check
+        --naive     use slow 2d dynamic programming algorithm to obtain exact cost
         g|sg        distance function (e.g., global or semi-global)
         <qpath>     query sequences in fasta or fastq format
         <tpath>     target sequence in fasta format
@@ -55,6 +57,6 @@ INFO, chainx::main, query #0 (999760 residues), distance = 939635
 INFO, chainx::main, distance computation finished (0.197675 seconds elapsed)
 ```
 
-## Publications
+## <a name="pub"></a>Publications
 
-- **Chirag Jain, Daniel Gibney and Sharma Thankachan**. "[Co-linear chaining with overlaps and gap costs](https://doi.org/10.1101/2021.02.03.429492)". *RECOMB 2022*.
+- **Chirag Jain, Daniel Gibney and Sharma Thankachan**. "Algorithms for Colinear Chaining with Overlaps and Gap Costs". *Journal of Computational Biology (RECOMB 2022 special issue)*. [PDF](https://cds.iisc.ac.in/faculty/chirag/pubs/2022-jain-chainX-jcb.pdf)
